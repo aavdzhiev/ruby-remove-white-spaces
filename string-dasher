@@ -1,0 +1,34 @@
+require 'clipboard'
+while true do 
+	print "Insert heading: "
+	user_input = gets
+	user_input.downcase!
+
+
+#Gets the user input and replaces blank spaces with dashes.
+
+	if user_input.include? " "
+		user_input.strip! #removes spaces before and after string
+		user_input.gsub!(/\s+/, "-") 
+		Clipboard.copy user_input
+		puts "Here is your new heading: #{user_input}.htm"	
+	else	
+		puts "Your string has no blank spaces."
+
+	end
+	
+	begin 
+		puts "Do you wish to continue?[y/n]"
+		prompt = gets.chomp
+		unless ["y", "Y", "Yes", "YES", "yes"].include?(prompt)
+			if ["N", "n", "no"].include?(prompt)
+				break
+			else 
+				raise Exception.new('Invalid input, please try again')
+			end
+		end
+	rescue Exception => e
+		puts e.message
+		retry
+	end
+end
